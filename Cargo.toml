@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0.93"
+futures-util = "0.3.31"
 pin-project = "1.1.7"
 rand = "0.8.5"
 serde = { version = "1.0.215", features = ["derive"] }

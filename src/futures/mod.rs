@@ -1,10 +1,12 @@
 use std::future::Future;
 
 use either::Either;
+use into_stream::IntoStream;
 use map::Map;
 use map_into::MapInto;
 
 mod either;
+mod into_stream;
 mod map;
 mod map_into;
 mod then;
@@ -48,6 +50,13 @@ trait FuturesExt: Future {
         Self: Sized,
     {
         Either::Right { fut: self }
+    }
+
+    fn into_stream(self) -> IntoStream<Self>
+    where
+        Self: Sized,
+    {
+        IntoStream::new(self)
     }
 }
 
