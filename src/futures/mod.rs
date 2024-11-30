@@ -2,12 +2,15 @@ use std::future::Future;
 
 use either::Either;
 use flatten::Flatten;
+use flatten_stream::FlattenStream;
+use futures_util::Stream;
 use into_stream::IntoStream;
 use map::Map;
 use map_into::MapInto;
 
 mod either;
 mod flatten;
+mod flatten_stream;
 mod into_stream;
 mod map;
 mod map_into;
@@ -67,6 +70,14 @@ trait FuturesExt: Future {
         Self::Output: Future,
     {
         Flatten::new(self)
+    }
+
+    fn flatten_stream(self) -> FlattenStream<Self>
+    where
+        Self: Sized,
+        Self::Output: Stream,
+    {
+        FlattenStream::new(self)
     }
 }
 
