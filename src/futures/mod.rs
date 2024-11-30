@@ -2,6 +2,7 @@ use std::future::Future;
 
 mod map;
 mod map_into;
+mod then;
 
 trait FuturesExt: Future {
     fn map<F, U>(self, f: F) -> map::Map<Self, F>
@@ -18,6 +19,14 @@ trait FuturesExt: Future {
         Self: Sized,
     {
         map_into::MapInto::new(self)
+    }
+
+    fn then<Fut, F>(self, f: F) -> then::Then<Self, F, Fut>
+    where
+        F: FnOnce(Self::Output) -> Fut,
+        Self: Sized,
+    {
+        then::Then::new(self, f)
     }
 }
 
