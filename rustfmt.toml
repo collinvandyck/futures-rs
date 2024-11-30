@@ -1,0 +1,10 @@
+# https://github.com/rust-lang/rustfmt/blob/master/Configurations.md
+
+style_edition = "2024"
+use_small_heuristics = "Default"
+merge_derives = false
+group_imports = "StdExternalCrate"
+imports_granularity = "crate"
+max_width = 110
+wrap_comments=false
+use_field_init_shorthand = true
