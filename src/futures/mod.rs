@@ -5,6 +5,7 @@ use flatten::Flatten;
 use flatten_stream::FlattenStream;
 use fuse::Fuse;
 use futures_util::Stream;
+use inspect::Inspect;
 use into_stream::IntoStream;
 use map::Map;
 use map_into::MapInto;
@@ -13,6 +14,7 @@ mod either;
 mod flatten;
 mod flatten_stream;
 mod fuse;
+mod inspect;
 mod into_stream;
 mod map;
 mod map_into;
@@ -87,6 +89,14 @@ trait FuturesExt: Future {
         Self: Sized,
     {
         Fuse::new(self)
+    }
+
+    fn inspect<F>(self, f: F) -> Inspect<Self, F>
+    where
+        Self: Sized,
+        F: FnOnce(&Self::Output),
+    {
+        Inspect::new(self, f)
     }
 }
 
