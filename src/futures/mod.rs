@@ -9,6 +9,7 @@ use inspect::Inspect;
 use into_stream::IntoStream;
 use map::Map;
 use map_into::MapInto;
+use shared::Shared;
 
 mod either;
 mod flatten;
@@ -18,6 +19,7 @@ mod inspect;
 mod into_stream;
 mod map;
 mod map_into;
+mod shared;
 mod then;
 
 trait FuturesExt: Future {
@@ -97,6 +99,14 @@ trait FuturesExt: Future {
         F: FnOnce(&Self::Output),
     {
         Inspect::new(self, f)
+    }
+
+    fn shared(self) -> Shared<Self>
+    where
+        Self: Sized,
+        Self::Output: Clone,
+    {
+        Shared::new(self)
     }
 }
 
